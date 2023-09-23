@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-
-function Query() {
-  
+function Query({location, date, temperature}) {  
     return (
-    <div>Hello!</div>
+    <div>
+      <p>{location}</p>
+      <p>{date}</p>
+      <p>{temperature} °C</p>
+    </div>
   );
 }
 
