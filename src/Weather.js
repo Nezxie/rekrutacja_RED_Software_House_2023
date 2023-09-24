@@ -1,6 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import Error from './Error';
+
 
 function Weather({queryList, setQueryList}) {
+    const [error, setError] = useState({
+      isError: false,
+      errorMessage: ""
+    });
     const locationNameRef = useRef();
     const API_KEY = '4f2f9814c28b4036ad500721230204';
 
@@ -9,7 +15,10 @@ function Weather({queryList, setQueryList}) {
     }
 
     function callErrorPopup(error){
-      console.log(error.message)
+      setError({
+        isError: true,
+        errorMessage: error.message
+      })
     }
 
     async function fetchCurrentWeather(location){
@@ -34,6 +43,10 @@ function Weather({queryList, setQueryList}) {
               return;
             }
             updateQuerylist(queryData);
+            setError({
+              isError: false,
+              errorMessage: ""
+            })
             locationNameRef.current.value = null;
 
         }catch(err){
@@ -49,9 +62,12 @@ function Weather({queryList, setQueryList}) {
 
     return (
       <div className="weatherForm">
-        <label htmlFor="locationInput">Location:</label>
-        <input id="locationInput" ref={locationNameRef} type="text" placeholder="London..."></input>
-        <button onClick={handleNewQuery}>Check current weather</button>
+        <div className='formControl'>
+          <label htmlFor="locationInput">Location:</label>
+          <input id="locationInput" ref={locationNameRef} type="text" placeholder="London..."></input>
+          <button onClick={handleNewQuery}>Check current weather</button>
+          </div>
+        {error.isError ? <Error message={error.errorMessage}></Error> : ""}
       </div>
     );
   }

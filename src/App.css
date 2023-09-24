@@ -1,0 +1,90 @@
+body{
+    background-color: #dee2d9;
+    font-size: 18px;
+    margin:0px auto;
+}
+.App{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin:0px 5%;
+}
+@media only screen and (min-width: 1200px) {
+    .App{
+        margin:0px 20%;    
+    }
+  }
+.weatherForm{
+    background-color: #8da290;
+    padding:25px 60px 20px 60px;
+    border-radius: 1em 1em 0px 0px; 
+    margin-top: 50px;
+    min-height: 150px;
+}
+.formControl{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;  
+}
+.formControl>*{
+    margin: 10px 0px 10px 0px;
+}
+.formControl>button{
+    padding: 8px 15px;
+    border:none;
+    background-color: #fcf1d6;
+    border-radius: 1.5em;
+    cursor: pointer;
+}
+.formControl>button:hover{
+    background-color: #C9C0AB;
+}
+.formControl>input{
+    padding: 8px 10px;
+    border:1px solid #fcf1d6;
+    border-radius: 1.5em;
+}
+@media only screen and (min-width: 600px) {
+    .formControl{
+        flex-direction: row;    
+    }
+    .formControl>*{
+        margin: 0px 10px 0px 0px;
+    }
+  }
+.errorMessage{
+    background-color: #f2cbbb;
+    padding: 5px 30px;
+    border-radius: 1em;
+    margin: 15px 15px 0px 15px; 
+    
+}
+.queryList{
+    border:5px solid #8da290;
+    border-radius: 0px 0px 1em 1em;
+}
+.singleQuery{
+    display: flex;
+    flex-direction: column;
+    background-color: #becfb4;
+    padding: 10px 30px;
+    border-radius: 1em;
+    margin: 30px 15px; 
+}
+.singleQuery>p{
+    margin: 10px 0px;
+}
+
+@media only screen and (min-width: 600px) {
+    .singleQuery{
+        flex-direction: row;
+    }
+    .singleQuery>p{
+        margin: 0px 30px 0px 0px;
+    }
+    .singleQuery>.searchCounter{
+        margin-right: 0px;
+        margin-left: auto;
+    }
+  }
