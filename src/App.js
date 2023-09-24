@@ -1,11 +1,11 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
 import Weather from './Weather';
 import QueryList from './QueryList';
+import React, { useState, useEffect } from 'react';
 
 function App() {
   const [queryList, setQueryList] = useState([]);
-  const [nameCount, setNameCount] = useState(
+  const [queryCount, setQueryCount] = useState(
     () => {
       const savedState = localStorage.getItem("searchHistory");
       const count = JSON.parse(savedState);
@@ -14,27 +14,29 @@ function App() {
   );
 
   function updateQuerylist(newEntry){
-    setQueryList([...queryList, { id:crypto.randomUUID() ,location: newEntry.location, date: newEntry.date, temperature: newEntry.temperature, numberOfSearches:newEntry.numberOfSearches}]);
+    setQueryList([...queryList, { id:crypto.randomUUID() ,location: newEntry.location, date: newEntry.date, temperature: newEntry.temperature}]);
   }
-  function updateNameCount(queryName){
-    let nameCountCopy = nameCount;
-    if(queryName in nameCount){
-      nameCountCopy[queryName]+=1;
+
+  function updateQueryCount(queryName){
+    let queryCountCopy = queryCount;
+    if(queryName in queryCount){
+      queryCountCopy[queryName]+=1;
     }
     else{
-      nameCountCopy[queryName]=1;
+      queryCountCopy[queryName]=1;
     }
-    setNameCount(nameCountCopy);
+    setQueryCount(queryCountCopy);
   }
+
   useEffect(() => {
-    localStorage.setItem('searchHistory', JSON.stringify(nameCount));
+    localStorage.setItem('searchHistory', JSON.stringify(queryCount));
   });
   
   return (
     <div className="App">
-      <Weather updateNameCount={updateNameCount} updateQuerylist={updateQuerylist}></Weather>
+      <Weather updateQueryCount={updateQueryCount} updateQuerylist={updateQuerylist}></Weather>
       <div className="queryList">
-        <QueryList queryList={queryList} nameCount={nameCount}></QueryList>
+        <QueryList queryList={queryList} queryCount={queryCount}></QueryList>
       </div>
     </div>
   );

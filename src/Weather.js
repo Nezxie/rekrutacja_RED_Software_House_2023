@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
 import Error from './Error';
+import React, { useState, useRef } from 'react';
 
 
-function Weather({updateNameCount, updateQuerylist}) {
+function Weather({updateQueryCount, updateQuerylist}) {
     const [error, setError] = useState({
       isError: false,
       errorMessage: ""
@@ -31,7 +31,13 @@ function Weather({updateNameCount, updateQuerylist}) {
                 date:data.current['last_updated'],
                 temperature:data.current['temp_c'],
             }
-            if(queryData.location.localeCompare(location, 'en', { sensitivity: 'base' })){
+
+            /* API sometimes gives back diffrent location than inputed, so we need to make sure it's the exact one,
+             and not some other autocompleted by API. This also helps the user, cause error gives back suggestion
+              and they can copy the correct spelling of the location.
+               Would be better to implement a dynamic search, cause I think this API can do that. */
+
+            if(queryData.location.localeCompare(location, 'en', { sensitivity: 'base' })){ 
               let error = {
                 message: `Location not found. Did you mean ${queryData.location}?`
               }
@@ -39,7 +45,7 @@ function Weather({updateNameCount, updateQuerylist}) {
               return;
             }
             updateQuerylist(queryData);
-            updateNameCount(queryData.location);
+            updateQueryCount(queryData.location);
             setError({
               isError: false,
               errorMessage: ""
@@ -47,12 +53,12 @@ function Weather({updateNameCount, updateQuerylist}) {
             locationNameRef.current.value = null;
 
         }catch(err){
-          let error = { message: "There has been a connection issue"}
+          let error = { message: "There has been an error. Please check your internet connection."}
           callErrorPopup(error)
         }
     }
 
-    function handleNewQuery(e) {
+    function handleNewQuery() {
         const location = locationNameRef.current.value;
         if (location === '') return;
         fetchCurrentWeather(location);
