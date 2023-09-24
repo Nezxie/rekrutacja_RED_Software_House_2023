@@ -2,28 +2,13 @@ import React, { useState, useRef } from 'react';
 import Error from './Error';
 
 
-function Weather({queryList, setQueryList, nameCount, setNameCount}) {
+function Weather({updateNameCount, updateQuerylist}) {
     const [error, setError] = useState({
       isError: false,
       errorMessage: ""
     });
     const locationNameRef = useRef();
     const API_KEY = '4f2f9814c28b4036ad500721230204';
-
-    function updateQuerylist(newEntry){
-      setQueryList([...queryList, { id:crypto.randomUUID() ,location: newEntry.location, date: newEntry.date, temperature: newEntry.temperature, numberOfSearches:newEntry.numberOfSearches}]);
-    }
-    function updateNameCount(queryName){
-      let nameCountCopy = nameCount;
-      if(queryName in nameCount){
-        nameCountCopy[queryName]+=1;
-      }
-      else{
-        nameCountCopy[queryName]=1;
-      }
-      setNameCount(nameCountCopy);
-    }
-
 
     function callErrorPopup(error){
       setError({
@@ -62,7 +47,8 @@ function Weather({queryList, setQueryList, nameCount, setNameCount}) {
             locationNameRef.current.value = null;
 
         }catch(err){
-        console.log(err);
+          let error = { message: "There has been a connection issue"}
+          callErrorPopup(error)
         }
     }
 
